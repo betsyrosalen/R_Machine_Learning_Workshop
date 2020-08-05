@@ -1,0 +1,68 @@
+---
+title: "R Machine Learning Workshop Day 1"
+output: 
+  html_document:
+    code_folding: hide
+    #css: ./style.css
+    df_print: kable
+    fig_caption: yes
+    fig_width: 12
+    fig_height: 12
+    highlight: tango
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    fig_width: 12
+    fig_height: 12
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## 
+
+```{r}
+library(tidymodels)
+data(ames, package = "modeldata")
+str(ames)
+```
+
+```{r}
+summary(ames)
+```
+
+```{r}
+library(psych)
+describe(ames)
+```
+
+```{r}
+ames_num <- select_if(ames, is.numeric) 
+#pairs(ames_num[,c(1:10)])
+```
+
+```{r}
+library(DataExplorer)
+plot_bar(ames) 
+```
+
+```{r}
+plot_histogram(ames)
+```
+
+```{r}
+library(ggridges)
+ames %>% 
+  mutate(home_age = 2020-Year_Built) %>% 
+  ggplot(aes(x = home_age, y = reorder(Neighborhood, home_age))) +
+  ggridges::geom_density_ridges() +
+  theme_minimal()
+```
+
